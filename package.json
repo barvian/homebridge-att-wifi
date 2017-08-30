@@ -1,0 +1,20 @@
+{
+  "name": "hue-wifi-switch",
+  "version": "1.0.0",
+  "description": "Simple script that polls my Hue bridge and turns off/on Wi-Fi if all the lights are off/on.",
+  "main": "index.js",
+  "bin": {
+    "hue-wifi-switch": "./index.js"
+  },
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "node-fetch": "^1.7.2",
+    "phantom": "^4.0.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/barvian/hue-wifi-switch.git"
+  },
+  "author": "Maxwell Barvian",
+  "license": "ISC"
+}
