@@ -4,7 +4,7 @@ require('dotenv').config()
 
 const { toggle: toggleWifi } = require('./util/wifi')
 const { hasLightsOn: getHasLightsOn } = require('./util/hue')
-const { POLL_INTERVAL = 15000 } = process.env
+const { POLL_INTERVAL = 20000 } = process.env
 
 let prevHadLightsOn
 const pollForChanges = async function() {
