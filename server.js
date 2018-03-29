@@ -48,7 +48,16 @@ http.createServer((request, response) => {
     }
 
     response.writeHeader(200, { "Content-Type": "text/html" });
-    response.write(`<html><title>Wifi</title><form method="POST" action="/override"><input onchange="this.form.submit()" type="checkbox" ${override ? 'checked' : ''} name="override" value="true" />Keep off</form></html>`)
+    response.write(`
+      <html>
+        <title>Wifi</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <form method="POST" action="/override">
+          <input onchange="this.form.submit()" type="checkbox" ${override ? 'checked' : ''} name="override" value="true" />
+          Keep off
+        </form>
+      </html>
+    `)
     response.end()
   })
 }).listen(parseInt(PORT, 10));
