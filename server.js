@@ -20,13 +20,14 @@ const pollForChanges = async function() {
   } else {
     try {
       const hasLightsOn = await getHasLightsOn()
-      if (prevHadLightsOn === hasLightsOn) return 
-      try {
-        await toggleWifi(hasLightsOn)
-        // We shouldn't set this unless ^ goes through
-        prevHadLightsOn = hasLightsOn
-      } catch (error) {
-        console.log('Error toggling wifi:', error)
+      if (prevHadLightsOn !== hasLightsOn) {
+        try {
+          await toggleWifi(hasLightsOn)
+          // We shouldn't set this unless ^ goes through
+          prevHadLightsOn = hasLightsOn
+        } catch (error) {
+          console.log('Error toggling wifi:', error)
+        }
       }
     } catch (error) {
       console.log('Error getting number of on lights:', error)
@@ -52,9 +53,15 @@ http.createServer((request, response) => {
       <html>
         <title>Wifi</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+          :root,body,form,label{margin: 0; padding: 0; height: 100%;}
+          label{display: flex; align-items: center; justify-content: center;}
+        </style>
         <form method="POST" action="/override">
-          <input onchange="this.form.submit()" type="checkbox" ${override ? 'checked' : ''} name="override" value="true" />
-          Keep off
+          <label>
+            <input onchange="this.form.submit()" type="checkbox" ${override ? 'checked' : ''} name="override" value="true" />&nbsp;
+            Keep off
+          </label>
         </form>
       </html>
     `)
