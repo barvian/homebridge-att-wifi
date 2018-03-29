@@ -1,5 +1,8 @@
+const path = require('path')
 const phantom = require('phantom')
 const {
+  PHANTOM_PATH = path.join(__dirname, '../node_modules/phantomjs-prebuilt/bin/phantomjs'),
+  
   WIFI_IP,
   WIFI_ACCESS_CODE,
   WIFI_SETTINGS_URL,
@@ -20,7 +23,9 @@ const {
 // Wrapped promise was the only way I could figure out how to reject
 // immediately from an await'ed .on handler
 module.exports.toggle = (state) => new Promise(async (resolve, reject) => {
-  const instance = await phantom.create()
+  const instance = await phantom.create([], {
+    phantomPath: PHANTOM_PATH
+  })
   const page = await instance.createPage()
   
   await page.setting('resourceTimeout', parseInt(WIFI_TIMEOUT, 10))
