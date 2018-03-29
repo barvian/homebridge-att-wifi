@@ -8,6 +8,7 @@ const { hasLightsOn: getHasLightsOn } = require('./util/hue')
 const { PORT = 3000, POLL_INTERVAL = 20000 } = process.env
 
 let override = false, prevOverride = false, prevHadLightsOn
+
 const pollForChanges = async function() {
   if (override && override !== prevOverride) {
     try {
@@ -17,10 +18,10 @@ const pollForChanges = async function() {
     } catch (error) {
       console.log('Error overriding wifi:', error)
     }
-  } else {
+  } else if (!override) {
     try {
       const hasLightsOn = await getHasLightsOn()
-      if (prevHadLightsOn !== hasLightsOn) {
+      if (override !== prevOverride || prevHadLightsOn !== hasLightsOn) {
         try {
           await toggleWifi(hasLightsOn)
           // We shouldn't set this unless ^ goes through
